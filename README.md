@@ -1,7 +1,7 @@
-# csapp-self-learning
+### csapp-self-learning
 including the practice and homework as well as notes in the lesson learning process
 
-#### 整数运算:
+#### 整数运算
 在计算一个补码表示的负数,即求补码的非时,我们可以将位向量拆分为两部分:
 从$x_{w-1},x_{w-2},...,x_{k+1},1,0,0,...,0$
 
@@ -56,7 +56,7 @@ Store status information about most recent arithmetic or logical operation，
 
 cache是不可见的，programmer无法直接操作或访问cache
 
-##### 程序的编码过程
+###### 程序的编码过程
 
 考虑大型程序的编译 
 -Og优化的原因：较高级别优化产生的代码会严重变形
@@ -69,7 +69,7 @@ cache是不可见的，programmer无法直接操作或访问cache
 
 操作数指示符
 立即数 + 寄存器 + 内存引用
-##### 寻址模式
+###### 寻址模式
 针对不同形式的memory 操作数引用
 $Imm(r_b,r_i,s)$是最常用的比例变址寻址
 其中的比例因子必须是1，2，4或者8
@@ -79,3 +79,20 @@ $Imm(r_b,r_i,s)$是最常用的比例变址寻址
 由于64位机器上称64位数为"quad word" 且大部分代码示例都使用了指针和long数据类型,所以都是四字操作,如movq
 
 在进行寄存器与内存之间的数据传送时,需要通过总线传送
+
+##### control
+control the flow of execution of instructions 
+可以根据条件码的某种组合,将一个字节设置为0或者1 set指令的目的操作数是==低位单字节寄存器元素==
+`setg D` ~ZF&&~(SF^OF)  此时SF为0且OF为0 或者 如正数减去负数 得到正溢出OF为1,且SF为1 这两个情形不同时成立
+
+`seta D`  当a > b时,CF为0,说明无借位
+并且ZF标志不为0,说明a!=b
+由于许多算术运算对无符号和补码算术都有相同的位级行为,所以机器代码如何区分有符号和无符号值是很重要的
+
+###### 跳转指令的编码
+无论是汇编器还是链接器产生的结果
+PC相对寻址 看指令的字节编码
+用数据的条件转移来代替控制的条件转移
+即用条件传送指令实现条件分支
+
+执行开关语句的时间与开关情况的数量无关
