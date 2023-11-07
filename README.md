@@ -8,6 +8,18 @@ including the practice and homework as well as notes in the lesson learning proc
 
 掩码的概念:用于产生特定选出的位的集合 要注意掩码的可移植性
 如~0 掩码和oxFFFFFFFF本质上还是不同的
+
+#### 整数表示
+关于two's complement的encoding,我们将字的最高有效位解释为negative weight,即负权重
+这对帮助理解补码的T2B和表示范围有很大的帮助
+
+对于非负数x,求解-x的补码表示 是通过$2^w - x$实现的
+而求解-x的反码表示是通过$[111...1] - x$实现的 
+对于32位机器,由八个16进制数字组成的num的最高位
+==若为8~f之间的任何值都表示其为一个负数==
+
+expand && truncate
+size_t在stdio.h文件中定义为unsigned int的
 #### 整数运算
 在计算一个补码表示的负数,即求补码的非时,我们可以将位向量拆分为两部分:
 从$x_{w-1},x_{w-2},...,x_{k+1},1,0,0,...,0$
