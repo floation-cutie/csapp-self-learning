@@ -4,7 +4,7 @@
 int tree[40] =
     {-1, 36, 8, 50, 6, 22, 45, 107, 1, 7, 20, 35, 40, 47, 99, 1001};
 int cur = 1;
-int esi = 47;
+int esi = 35;
 int eax;
 void find()
 {
@@ -42,7 +42,7 @@ int main()
         if (tree[i] <= 0)
             tree[i] = -1;
     find();
-    if (eax == 5)
+    if (eax == 6)
     {
         puts("FIND it!!!!");
     }

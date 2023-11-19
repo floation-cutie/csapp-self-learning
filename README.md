@@ -1,4 +1,5 @@
-### csapp-self-learning
+### CSAPP-self-learning
+
 including the practice and homework as well as notes in the lesson learning process
 
 #### 数据存储
@@ -20,6 +21,7 @@ including the practice and homework as well as notes in the lesson learning proc
 
 expand && truncate
 size_t在stdio.h文件中定义为unsigned int的
+
 #### 整数运算
 在计算一个补码表示的负数,即求补码的非时,我们可以将位向量拆分为两部分:
 从$x_{w-1},x_{w-2},...,x_{k+1},1,0,0,...,0$
@@ -117,6 +119,7 @@ PC相对寻址 看指令的字节编码
 执行开关语句的时间与开关情况的数量无关
 
 ##### procedures
+
 过程,方法,子例程,处理函数这些都是过程在软件中的抽象
 提供对过程的机器级支持
 1. passing control: 通过程序计数器设置被调用函数的起始地址以及返回后原函数应当指向的下一条指令的地址
@@ -125,3 +128,58 @@ PC相对寻址 看指令的字节编码
 
 第七个或以上的参数放入调用函数P的栈帧中
 当前正在执行的过程的帧总是在栈顶
+
+##### data
+Besides manipulating integers or long integers or pointers,which are all ==scaler data==,即标量数据，we can aggregate them into a bigger form,聚集成更大的数据类型。
+
+###### 数组分配和访问
+
+C语言可以产生指向数组中元素的指针，并对这些指针进行运算，也即通过array identifier 操作指针
+
+###### 指针运算
+
+需要注意的是，我们不能改变标识符A的大小，since it’s a const value.可以进行
+
+```c
+val+1;//可以
+val++;//非法
+```
+
+```c
+int E[5];
+&E[i] - E;//结果是i，且类型为long，为两个地址之差除以该数据类型的大小
+*(type) //the type is T*,为指针类型
+```
+
+需要注意的是，对于不同的操作对象，`int or int*` 汇编层面的效果是不同的，涉及四字节的`movl %eax`
+
+涉及八字节的`leaq %rax` 
+
+###### Pointers & Arrays
+
+数组在进行声明时，除了为数组名分配了对应的地址空间用于索引，同时分配了实际大小的数组元素空间，这些是在内存中可以被实际访问到的
+
+Bad 表示空指针引用 `sizeof(A1)==12 sizeof(A2)== 8`
+
+![image-20231114180707849](C:\Users\WESLEY\AppData\Roaming\Typora\typora-user-images\image-20231114180707849.png)
+
+对非指针类型的数组名进行连续两次解引用是不会通过编译的
+指针数组or 指向数组的指针 在没有括号时，数组[]的优先级是高于*指针命名的优先级的
+`int *(A3) [3]` :声明一个指针，指向一个int[3]的数组
+==但这个数组并没有实际被分配内存空间，可能造成空指针引用==
+
+###### nested arrays
+Row-major Ordering 嵌套数组和定长数组的汇编引用会产生不同
+
+###### 异质的数据结构
+Fields ordered according to declaration,不同的字段之间可以被编译器明确地区分
+determined at compile time
+注意数组的索引查询时要将4字节的eax寄存器符号位扩展到八字节 movslq
+现代操作系统每次取字节都是一次性取出多个(如64)字节，防止其在访问同一数据结构时出现多次重新取值的麻烦
+we need Alignment!
+通过末尾  0 的个数判断对齐方式
+
+考虑the largest Alignment we need to satisfy,我们要保证整体的地址对齐满足K的倍数
+==对于arrays of Structure== 这样的处理是很有效的
+
+将大数据优先声明在前面，是一种最大化节省空间的贪心算法

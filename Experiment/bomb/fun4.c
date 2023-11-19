@@ -48,6 +48,6 @@ int main()
     int a;
     scanf("%d", &a);
     int res = func4(a, 0, 14);
-    test(res, 13);
+    test(res, 15);
     return 0;
 }
