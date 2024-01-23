@@ -183,3 +183,21 @@ we need Alignment!
 ==对于arrays of Structure== 这样的处理是很有效的
 
 将大数据优先声明在前面，是一种最大化节省空间的贪心算法
+
+###### 缓冲区溢出
+允许使用47位地址 已被使用的地址有48位
+128T的内核空间 与 128T的用户空间
+分析7fffffffffff的来源 就是指128T的用户空间
+在linux中，栈就是从最高端向下延展的，共有8MB runtime stack
+也就是==栈溢出的核心矛盾==
+
+descriptor table && file table && v-node table
+从Exception Control Flows 出发,理解进程与fork的概念
+the nested Fork matters!
+
+How to implement I/O redirection???
+
+#### Linking
+加载器负责复制入内存
+实现separate compilation 分离编译
+符号解析用于关联符号引用和符号定义
